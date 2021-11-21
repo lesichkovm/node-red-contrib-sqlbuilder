@@ -8,10 +8,14 @@ A "batteries included" SQL query builder for CockroachDB, MariaDB, MSSQL, MySQL,
 
 <img src="./snapshots/20211121143000.png" />
 
-# Example Queries
+## Example Queries
 
 ```
 query.select("id").from("users").where({
     id: msg.user_id
 })
 ```
+
+## Full Query Documentation
+
+- https://knexjs.org/#Builder
