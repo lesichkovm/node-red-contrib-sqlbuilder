@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  RED.nodes.registerType('sql', {
+  RED.nodes.registerType('sqlbuilder', {
     category: 'storage',
     color: '#a6bbcf',
     defaults: {
@@ -55,7 +55,7 @@
   })
 </script>
 
-<script type="text/x-red" data-template-name="sql">
+<script type="text/x-red" data-template-name="sqlbuilder">
     <div class="form-row">
         <label for=""><i class="fa fa-code"></i> SQL Dialect</label>
         <select id="node-input-sqldialect">
@@ -81,7 +81,7 @@
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="sql">
+<script type="text/x-red" data-help-name="sqlbuilder">
   <p>
       Generates a SQL query
   </p>
