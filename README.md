@@ -6,7 +6,7 @@ A "batteries included" SQL query builder for CockroachDB, MariaDB, MSSQL, MySQL,
 
 ## Snapshot ##
 
-<img src="./snapshots/20211121143000.png" />
+![SQLBuilder Basic Example](/snapshots/20211121143000.png?raw=true "Basic use")
 
 ## Example Queries
 
