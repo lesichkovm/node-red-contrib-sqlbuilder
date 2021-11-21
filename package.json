@@ -1,7 +1,11 @@
 {
     "name": "node-red-contrib-sqlbuilder",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A \"batteries included\" SQL query builder for CockroachDB, MariaDB, MSSQL, MySQL, PostgreSQL, SQLite3, Oracle DB, and Amazon Redshift",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:lesichkovm/node-red-contrib-sqlbuilder.git"
+    },
     "keywords": [
         "sql",
         "node-red"
