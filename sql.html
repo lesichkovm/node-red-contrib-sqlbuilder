@@ -1,0 +1,88 @@
+<script type="text/javascript">
+  RED.nodes.registerType('sql', {
+    category: 'storage',
+    color: '#a6bbcf',
+    defaults: {
+      sqldialect: { value: '', required: true },
+      sqlquery: { value: '' },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'icon.svg',
+    label: function () {
+      return this.name || 'SQL'
+    },
+    oneditprepare: function () {
+      var ace = this
+      this.editor = RED.editor.createEditor({
+        id: 'node-input-sqlquery-editor',
+        mode: 'ace/mode/javascript',
+        value: $('#node-input-sqlquery').val(),
+        globals: {
+          msg: true,
+          context: true,
+          RED: true,
+          util: true,
+          flow: true,
+          global: true,
+          console: true,
+          Buffer: true,
+          setTimeout: true,
+          clearTimeout: true,
+          setInterval: true,
+          clearInterval: true,
+        },
+      })
+    },
+    oneditsave: function () {
+      $('#node-input-sqlquery').val(this.editor.getValue())
+      this.editor.destroy()
+      delete this.editor
+    },
+    oneditresize: function (size) {
+      var rows = $('#dialog-form>div:not(.node-text-editor-row)')
+      var height = $('#dialog-form').height()
+      for (var i = 0; i < rows.size(); i++) {
+        height -= $(rows[i]).outerHeight(true)
+      }
+      var editorRow = $('#dialog-form>div.node-text-editor-row')
+      height -=
+        parseInt(editorRow.css('marginTop')) +
+        parseInt(editorRow.css('marginBottom'))
+      $('.node-text-editor').css('height', height + 'px')
+      this.editor.resize()
+    },
+  })
+</script>
+
+<script type="text/x-red" data-template-name="sql">
+    <div class="form-row">
+        <label for=""><i class="fa fa-code"></i> SQL Dialect</label>
+        <select id="node-input-sqldialect">
+            <option value=""> - select dialect - </option>
+            <option value="cockroachdb">CockroachDB</option>
+            <option value="mssql">MSSQL</option>
+            <option value="mysql">MySQL</option>
+            <option value="oracledb">Oracle</option>
+            <option value="postgresql">PostgreSQL</option>
+            <option value="oracledb">Amazon Redshift</option>
+            <option value="sqlite3">SQLite</option>
+        </select>
+    </div>
+
+  <div class="form-row" style="margin-bottom: 0px;">
+      <label for="" style="width: unset;" id="node-input-sqllabel"><i class="fa fa-code"></i> SQL Query Builder</label>
+  </div>
+  <div>
+      <input type="hidden" id="node-input-sqlquery" autofocus="autofocus">
+  </div>
+  <div class="form-row node-text-editor-row">
+      <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-sqlquery-editor" ></div>
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="sql">
+  <p>
+      Generates a SQL query
+  </p>
+</script>
