@@ -4,6 +4,11 @@
     color: '#a6bbcf',
     defaults: {
       name: { value: '' },
+      field: {
+        value: 'sql',
+        validate: RED.validators.typedInput('fieldType'),
+      },
+      fieldType: { value: 'msg' },
       sqldialect: { value: '', required: true },
       sqlquery: { value: '' },
     },
@@ -14,6 +19,24 @@
       return this.name || 'SQL'
     },
     oneditprepare: function () {
+      // 1. set default field
+      if (!this.field) {
+        this.field = 'payload'
+        $('#node-input-field').val('payload')
+      }
+
+      // 2. set default field type
+      if (!this.fieldType) {
+        this.fieldType = 'msg'
+      }
+      // 3. set field type list
+      $('#node-input-field').typedInput({
+        default: 'msg',
+        types: ['msg', 'flow', 'global'],
+        typeField: $('#node-input-fieldType'),
+      })
+
+      // 2. Prepare Editor
       var ace = this
       this.editor = RED.editor.createEditor({
         id: 'node-input-sqlquery-editor',
@@ -56,10 +79,26 @@
   })
 </script>
 
+<!-- START: Template -->
 <script type="text/x-red" data-template-name="sqlbuilder">
     <div class="form-row">
       <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
       <input type="text" id="node-input-name">
+    </div>
+    <!-- <div class="form-row">
+      <label for="node-input-field"><i class="fa fa-ellipsis-h"></i> <span data-i18n="template.label.property"></span></label>
+      <input type="text" id="node-input-field" placeholder="payload" style="width:250px;">
+      <input type="hidden" id="node-input-fieldType">
+    </div> -->
+    <div class="form-row">
+      <label for="node-input-field">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+          </svg>
+          Property
+      </label>
+      <input type="text" id="node-input-field" placeholder="payload" style="width:250px;">
+      <input type="hidden" id="node-input-fieldType">
     </div>
     <div class="form-row">
         <label for=""><i class="fa fa-code"></i> SQL Dialect</label>
@@ -85,9 +124,14 @@
       <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-sqlquery-editor" ></div>
   </div>
 </script>
+<!-- END; Template -->
 
+<!-- START: Help -->
 <script type="text/x-red" data-help-name="sqlbuilder">
   <p>
-      Generates a SQL query
+    A "batteries included" SQL query builder for CockroachDB, MariaDB,
+    MSSQL, MySQL, PostgreSQL, SQLite3, Oracle DB, and Amazon Redshift
+    designed to be flexible, portable, and fun to use.
   </p>
 </script>
+<!-- END: Help -->
