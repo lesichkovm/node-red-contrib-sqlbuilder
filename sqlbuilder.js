@@ -29,11 +29,11 @@ module.exports = function (RED) {
 
       try {
         sql = eval(node.sqlquery).toString()
-        node.status({ fill: 'green', shape: 'dot', text: 'query built ok' })
+        node.status({ fill: 'green', shape: 'dot', text: 'ok' })
       } catch (error) {
         sql = null
         node.error('sql : builder error', msg)
-        node.status({ fill: 'red', shape: 'dot', text: 'query builder failed' })
+        node.status({ fill: 'red', shape: 'dot', text: 'failed' })
         msg.payload = error
       }
 
