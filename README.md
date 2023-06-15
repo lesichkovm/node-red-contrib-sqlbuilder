@@ -22,11 +22,30 @@ query.select(["id", "first_name"]).from("users").where({
 ```
 
 - Multiple inserts
+
+Wnat to insert multiple rows. Its easy, just add the objects to an array
+
 ```
 query.insert([
     msg.user01,
     msg.user02
 ]).into('users')
+```
+
+- Subquery
+
+Example of a subquery in a WHERE IN clause
+
+```
+query
+    .from("users")
+    .whereNotIn("id",
+        query
+            .from("users_unsubscribed")
+            .select(["user_id"]))
+    .limit(1)
+    .orderByRaw("RANDOM()")
+    .select(["*"])
 ```
 
 ## Full Query Documentation
